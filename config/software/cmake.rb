@@ -5,14 +5,15 @@
 #
 #  https://github.com/opscode/omnibus-software/tree/master/config/software
 #
-name "net-snmp"
-version "5.7.2"
+name "cmake"
+version "2.8.11.2"
 
-dependency "perl"
+dependency "libidn"
 
-source :path => "/vagrant/net-snmp-5.7.2"
+source :url => "http://www.cmake.org/files/v2.8/cmake-#{version}.tar.gz",
+       :md5 => "6f5d7b8e7534a5d9e1a7664ba63cf882"
 
-relative_path "net-snmp-#{version}"
+relative_path "cmake-#{version}"
 
 env = {
   "LDFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
@@ -21,12 +22,9 @@ env = {
 }
 
 build do
-  command [ "./configure",
-            "--prefix=#{install_dir}/embedded",
-            "--with-zlib=#{install_dir}/embedded",
-            "--with-openssl=#{install_dir}/embedded"
-            #"--with-perl-modules=#{
-           ].join(" "), :env => env
+  command ["./bootstrap",
+           "--prefix=#{install_dir}/embedded",
+           ].join(" ")
   command "make -j #{max_build_jobs}"
-  command "make install", :env => env
+  command "make install"
 end

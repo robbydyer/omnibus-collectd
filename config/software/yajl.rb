@@ -8,9 +8,11 @@
 name "yajl"
 version "2.0.1"
 
-source :path => "/vagrant/yajl-#{version}.tar.gz"
+dependency "cmake"
 
-relative_path "lloyd-yajl-f4b2b1a"
+source :path => "/vagrant/yajl-#{version}"
+
+relative_path "yajl-2.0.1"
 
 env = {
   "LDFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
@@ -19,8 +21,10 @@ env = {
 }
 
 build do
-  command ["./configure",
-           "--prefix=#{install_dir}/embedded",
+  command [
+            "PATH=#{install_dir}/embedded/bin:$PATH ;",
+            "./configure",
+            "--prefix=#{install_dir}/embedded",
            ].join(" "), :env => env
   command "make install"
 end

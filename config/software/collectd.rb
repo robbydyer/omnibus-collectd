@@ -20,13 +20,11 @@ dependencies [
                 "perl-extutils-makemaker",
                 #"net-snmp",
                 #"rrdtool",
-                #"yajl",
+                "yajl",
                 "libpcap",
                 #"liboping"
                 #"libmemcached",
                 #"librabbitmq",
-                #"liboping",
-                #"libpcap",
                 #"libvirt" 
             ]
                 
@@ -51,7 +49,7 @@ build do
                 "--enable-cpufreq",
                 "--enable-csv",
                 "--enable-curl",
-                #"--enable-curl-json",
+                "--enable-curl-json",
                 "--enable-curl-xml",
                 "--enable-df",
                 "--enable-disk",

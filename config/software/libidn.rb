@@ -5,14 +5,13 @@
 #
 #  https://github.com/opscode/omnibus-software/tree/master/config/software
 #
-name "net-snmp"
-version "5.7.2"
+name "libidn"
+version "1.18"
 
-dependency "perl"
+source :url => "ftp://ftp.gnu.org/gnu/libidn/libidn-#{version}.tar.gz",
+       :md5 => "66f115347439f56386f37a3ad92c1da2"
 
-source :path => "/vagrant/net-snmp-5.7.2"
-
-relative_path "net-snmp-#{version}"
+relative_path "libidn-#{version}"
 
 env = {
   "LDFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
@@ -21,11 +20,8 @@ env = {
 }
 
 build do
-  command [ "./configure",
-            "--prefix=#{install_dir}/embedded",
-            "--with-zlib=#{install_dir}/embedded",
-            "--with-openssl=#{install_dir}/embedded"
-            #"--with-perl-modules=#{
+  command ["./configure",
+           "--prefix=#{install_dir}/embedded",
            ].join(" "), :env => env
   command "make -j #{max_build_jobs}"
   command "make install", :env => env
