@@ -20,9 +20,12 @@ env = {
 }
 
 build do
-  command ["sh Configure",
-           "-de",
-           "-Dprefix=#{install_dir}/embedded",
+  command [
+            "sh Configure",
+            "-de",
+            "-Dprefix=#{install_dir}/embedded",
+            "-Duseshrplib", ## Compile shared libperl
+            "-Dusethreads" ## Compile ithread support
            ].join(" "), :env => env
   command "make -j #{max_build_jobs}"
   command "make install", :env => env

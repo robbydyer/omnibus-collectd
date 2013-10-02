@@ -18,15 +18,12 @@ dependencies [
                 "libxml2",
                 "iptables",
                 "perl-extutils-makemaker",
+                "perl-extutils-embed",
                 #"net-snmp",
-                #"rrdtool",
                 "yajl",
                 "libpcap",
                 "jdk",
                 "liboping"
-                #"libmemcached",
-                #"librabbitmq",
-                #"libvirt" 
             ]
                 
 
@@ -34,16 +31,19 @@ env = {
   "LDFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
   "CFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
   "LD_RUN_PATH" => "#{install_dir}/embedded/lib"
+  #"LD_LIBRARY_PATH" => "#{install_dir}/embedded/lib"
 }
 
 build do
     command [   
-                "export PATH=#{install_dir}/embedded/bin:$PATH;",
+                #"export PATH=#{install_dir}/embedded/bin:$PATH;",
                 "./configure",
                 "--prefix=#{install_dir}/embedded",
                 "--with-python=#{install_dir}/embedded/bin/python",
                 "--with-libyajl=#{install_dir}/embedded/lib",
-                "--with-libperl=#{install_dir}/embedded/lib",
+                "--with-libperl=#{install_dir}/embedded",
+                "--with-perl=#{install_dir}/embedded",
+                "--with-perl-bindings=\"INSTALL_BASE=#{install_dir}/embedded\"",
                 "--with-java=#{install_dir}/embedded/jdk",
                 "--disable-static",
                 "--enable-aggregation",
@@ -77,7 +77,7 @@ build do
                 "--enable-nfs",
                 "--enable-nginx",
                 "--enable-ntpd",
-                #"--enable-perl", ## needs perl
+                "--enable-perl", ## needs perl
                 "--enable-ping", ## needs liboping -> needs perl-ExtUtils-MakeMaker
                 "--enable-processes",
                 "--enable-protocols",
