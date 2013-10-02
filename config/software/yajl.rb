@@ -8,8 +8,6 @@
 name "yajl"
 version "2.0.1"
 
-dependency "cmake"
-
 source :path => "/vagrant/yajl-#{version}"
 
 relative_path "yajl-2.0.1"
@@ -22,9 +20,9 @@ env = {
 
 build do
   command [
-            "PATH=#{install_dir}/embedded/bin:$PATH ;",
             "./configure",
             "--prefix=#{install_dir}/embedded",
            ].join(" "), :env => env
   command "make install"
+
 end
