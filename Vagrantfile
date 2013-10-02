@@ -73,9 +73,10 @@ Vagrant.configure("2") do |config|
 
   config.vm.synced_folder host_project_path, guest_project_path
 
-#  config.vm.provision :shell, :inline => <<-CLEANUP
-#        yum erase libyaml -y
-#  CLEANUP
+  config.vm.provision :shell, :inline => <<-CLEANUP
+        #yum erase libyaml -y
+        yum install -y cmake
+  CLEANUP
 
   # prepare VM to be an Omnibus builder
   config.vm.provision :chef_solo do |chef|

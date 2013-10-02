@@ -22,6 +22,7 @@ dependencies [
                 #"rrdtool",
                 "yajl",
                 "libpcap",
+                "jdk",
                 "liboping"
                 #"libmemcached",
                 #"librabbitmq",
@@ -36,11 +37,14 @@ env = {
 }
 
 build do
-    command [   "./configure",
+    command [   
+                "export PATH=#{install_dir}/embedded/bin:$PATH;",
+                "./configure",
                 "--prefix=#{install_dir}/embedded",
                 "--with-python=#{install_dir}/embedded/bin/python",
                 "--with-libyajl=#{install_dir}/embedded/lib",
                 "--with-libperl=#{install_dir}/embedded/lib/perl5",
+                "--with-java=#{install_dir}/embedded/jdk",
                 #"--disable-debug",
                 "--disable-static",
                 "--enable-aggregation",
@@ -62,7 +66,7 @@ build do
                 "--enable-hddtemp",
                 "--enable-interface",
                 "--enable-ipvs",
-                #"--enable-java",
+                "--enable-java",
                 #"--enable-libvirt",
                 "--enable-load",
                 "--enable-logfile",
