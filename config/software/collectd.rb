@@ -22,7 +22,7 @@ dependencies [
                 #"rrdtool",
                 "yajl",
                 "libpcap",
-                #"liboping"
+                "liboping"
                 #"libmemcached",
                 #"librabbitmq",
                 #"libvirt" 
@@ -75,7 +75,7 @@ build do
                 "--enable-nginx",
                 "--enable-ntpd",
                 #"--enable-perl", ## needs perl
-                #"--enable-ping", ## needs liboping -> needs perl-ExtUtils-MakeMaker
+                "--enable-ping", ## needs liboping -> needs perl-ExtUtils-MakeMaker
                 "--enable-processes",
                 "--enable-protocols",
                 "--enable-python",
