@@ -36,7 +36,7 @@ env = {
 
 build do
     command [   
-                #"export PATH=#{install_dir}/embedded/bin:$PATH;",
+                "export PATH=#{install_dir}/embedded/bin:$PATH;",
                 "./configure",
                 "--prefix=#{install_dir}/embedded",
                 "--with-python=#{install_dir}/embedded/bin/python",
