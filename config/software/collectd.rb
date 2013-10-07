@@ -19,7 +19,7 @@ dependencies [
                 "iptables",
                 "perl-extutils-makemaker",
                 "perl-extutils-embed",
-                #"net-snmp",
+                "net-snmp",
                 "yajl",
                 "libpcap",
                 "jdk",
@@ -85,7 +85,7 @@ build do
                 #"--enable-rrdtool",
                 #"--enable-sensors",
                 "--enable-serial",
-                #"--enable-snmp", ## needs snmp, perl
+                "--enable-snmp", ## needs snmp, perl
                 "--enable-swap",
                 "--enable-syslog",
                 "--enable-table",
