@@ -24,7 +24,7 @@ dependencies [
                 "libpcap",
                 "jdk",
                 "liboping",
-                #"mysql"
+                "mysql"
             ]
                 
 
@@ -73,7 +73,7 @@ build do
                 "--enable-md",
                 "--enable-memory",
                 "--enable-multimeter",
-                #"--enable-mysql",
+                "--enable-mysql",
                 "--enable-network",
                 "--enable-nfs",
                 "--enable-nginx",

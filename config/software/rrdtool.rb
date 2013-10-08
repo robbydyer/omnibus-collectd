@@ -8,7 +8,9 @@
 name "rrdtool"
 version "1.4.8"
 
-source :url => "http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.8.tar.gz",
+dependency "libxml2"
+
+source :url => "http://oss.oetiker.ch/rrdtool/pub/rrdtool-#{version}.tar.gz",
        :md5 => "dbe59386db97fd2f2216729facd74ca8"
 
 relative_path "rrdtool-#{version}"
