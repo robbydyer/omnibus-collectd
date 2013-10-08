@@ -23,7 +23,8 @@ dependencies [
                 "yajl",
                 "libpcap",
                 "jdk",
-                "liboping"
+                "liboping",
+                #"mysql"
             ]
                 
 
