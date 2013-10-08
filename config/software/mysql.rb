@@ -37,17 +37,25 @@ env = {
 
 build do
   patch :source => "mysql-5.6.14-embedded_library_shared-1.patch"
-  #patch :source => "patch-mysys_ssl_my_default.patch"
+
+  ## These fixes courtesy of linuxfromscratch.org
+  ##  First two seds fix client-only builds. Last two seds set correct installation directories for some components.
   command [
-            "PATH=#{install_dir}/embedded/bin:$PATH;",
+        '/bin/sed -i "/ADD_SUBDIRECTORY(sql\/share)/d" CMakeLists.txt',
+        '/bin/sed -i "s/ADD_SUBDIRECTORY(libmysql)/&\\nADD_SUBDIRECTORY(sql\/share)/" CMakeLists.txt',
+        '/bin/sed -i "s@data/test@\${INSTALL_MYSQLSHAREDIR}@g" sql/CMakeLists.txt',
+        '/bin/sed -i "s@data/mysql@\${INSTALL_MYSQLTESTDIR}@g" sql/CMakeLists.txt',
+          ].join(" && ")
+
+  ## Now we can build it
+  command [
             "cmake",
             "-DCMAKE_INSTALL_PREFIX=#{install_dir}/embedded",
-            "-DWITH_SSL=#{install_dir}/embedded",
-            #"-DWITH_ZLIB=#{install_dir}/embedded", 
-            #"-DWITH_LIBEVENT=#{install_dir}/embedded",
-            #"-DWITHOUT_SERVER=true",
+            "-DWITH_SSL=system",
+            "-DWITH_ZLIB=system", 
+            "-DWITH_LIBEVENT=system",
             ".",
            ].join(" "), :env => env
-  command "make", :env => env
+  command "make -j #{max_build_jobs}", :env => env
   command "make install", :env => env
 end
