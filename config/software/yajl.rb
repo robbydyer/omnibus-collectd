@@ -17,9 +17,9 @@
 name "yajl"
 version "2.0.1"
 
-source :path => "/vagrant/yajl-#{version}"
+source :url => "https://github.com/lloyd/yajl/archive/#{version}.tar.gz", :md5 => 'b1b9355086b4dbb2774169630c2d8d0e'
 
-relative_path "yajl-2.0.1"
+relative_path "yajl-#{version}"
 
 env = {
   "LDFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
@@ -33,5 +33,4 @@ build do
             "--prefix=#{install_dir}/embedded",
            ].join(" "), :env => env
   command "make install"
-
 end
