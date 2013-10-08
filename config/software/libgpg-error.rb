@@ -1,5 +1,5 @@
 #
-# Copyright:: Copyright (c) 2013 Stratus Technologies
+# Copyright:: Copyright (c) 2013 Robby Dyer
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 name "libgpg-error"
 version "1.12"
 
