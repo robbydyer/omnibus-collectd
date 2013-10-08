@@ -37,14 +37,14 @@ Vagrant.configure("2") do |config|
     c.berkshelf.berksfile_path = "./Berksfile"
     c.vm.box = "opscode-centos-5.8"
     c.vm.box_url = "http://vagrant-boxes.voxeolabs.net.s3.amazonaws.com/VL-Cent58-64-v3.box"
-    c.vm.box_url = "http://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.8_chef-11.2.0.box"
+    #c.vm.box_url = "http://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.8_chef-11.2.0.box"
   end
 
   config.vm.define 'centos-6' do |c|
     c.berkshelf.berksfile_path = "./Berksfile"
     c.vm.box = "opscode-centos-6.3"
     c.vm.box_url = "http://vagrant-boxes.voxeolabs.net.s3.amazonaws.com/VL-Cent63-64.box"
-    c.vm.box_url = "http://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.3_chef-11.2.0.box"
+    #c.vm.box_url = "http://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.3_chef-11.2.0.box"
   end
 
   config.vm.provider :virtualbox do |vb|
