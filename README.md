@@ -5,6 +5,8 @@ This project creates full-stack platform-specific packages for
 
 ## Installation
 
+NOTE: This requires the build system to have cmake installed. This really should be fixed on the Opscode omnibus cookbook, but I'm lazy, so it's hacked in the Vagrantfile (only supports centOS in its current form).
+
 We'll assume you have Ruby 1.9+ and Bundler installed. First ensure all
 required gems are installed and ready to use:
 
