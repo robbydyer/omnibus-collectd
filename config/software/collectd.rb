@@ -99,7 +99,6 @@ build do
                 "--enable-processes",
                 "--enable-protocols",
                 "--enable-python",
-                #"--enable-rrdtool",
                 #"--enable-sensors",
                 "--enable-serial",
                 "--enable-snmp", ## needs snmp, perl
