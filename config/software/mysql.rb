@@ -15,45 +15,52 @@
 # limitations under the License.
 #
 name "mysql"
-version "5.6.14"
+version "5.5.25a"
 
 dependencies [
                 "libevent",
                 "openssl",
-                "zlib"
+                "zlib",
+                "ncurses"
              ]
 
-source  :url => "http://cdn.mysql.com/Downloads/MySQL-5.6/mysql-5.6.14.tar.gz",
-        :md5 => "52224ce51dbf6ffbcef82be30688cc04"
+source  :url => "http://downloads.mysql.com/archives/mysql-5.5/mysql-5.5.25a.tar.gz",
+        :md5 => "0841fbc79872c5f467d8c8842f45257a"
 
 relative_path "mysql-#{version}"
 
 env = {
   "LDFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
   "CFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
+  "CXXFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
+  "CPPFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
   "LD_RUN_PATH" => "#{install_dir}/embedded/lib",
   "LD_LIBRARY_PATH" => "#{install_dir}/embedded/lib",
+  "PATH" => "#{install_dir}/embedded/bin:#{ENV['PATH']}",
 }
 
+# Force CentOS-5 to use gcc/g++ v4.4
+if OHAI.platform =~ /centos/ and OHAI.platform_version =~ /^5/
+    env.merge!( {
+        "CC" => "gcc44",
+        "CXX" => "g++44"
+    }) 
+end
+
 build do
-  patch :source => "mysql-5.6.14-embedded_library_shared-1.patch"
 
-  ## These fixes courtesy of linuxfromscratch.org
-  ##  First two seds fix client-only builds. Last two seds set correct installation directories for some components.
-  command [
-        '/bin/sed -i "/ADD_SUBDIRECTORY(sql\/share)/d" CMakeLists.txt',
-        '/bin/sed -i "s/ADD_SUBDIRECTORY(libmysql)/&\\nADD_SUBDIRECTORY(sql\/share)/" CMakeLists.txt',
-        '/bin/sed -i "s@data/test@\${INSTALL_MYSQLSHAREDIR}@g" sql/CMakeLists.txt',
-        '/bin/sed -i "s@data/mysql@\${INSTALL_MYSQLTESTDIR}@g" sql/CMakeLists.txt',
-          ].join(" && ")
-
-  ## Now we can build it
   command [
             "cmake",
+            "-DCMAKE_SKIP_RPATH=YES",
             "-DCMAKE_INSTALL_PREFIX=#{install_dir}/embedded",
             "-DWITH_SSL=system",
-            "-DWITH_ZLIB=system", 
-            "-DWITH_LIBEVENT=system",
+            "-DOPENSSL_INCLUDE_DIR:PATH=#{install_dir}/embedded/include",
+            "-DOPENSSL_LIBRARIES:FILEPATH=#{install_dir}/embedded/lib/libssl.so",
+            "-DWITH_ZLIB=system",
+            "-DZLIB_INCLUDE_DIR:PATH=#{install_dir}/embedded/include",
+            "-DZLIB_LIBRARY:FILEPATH=#{install_dir}/embedded/lib/libz.so",
+            "-DCRYPTO_LIBRARY:FILEPATH=#{install_dir}/embedded/lib/libcrypto.so",
+            "-DWITH_BUNDLED_LIBEVENT=off",
             ".",
            ].join(" "), :env => env
   command "make -j #{max_build_jobs}", :env => env

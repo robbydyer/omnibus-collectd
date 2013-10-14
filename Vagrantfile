@@ -50,7 +50,8 @@ Vagrant.configure("2") do |config|
     vb.customize [
       "modifyvm", :id,
       "--memory", "1536",
-      "--cpus", "6"
+      "--cpus", "6",
+      "--cpuexecutioncap", "30"
     ]
   end
 
@@ -73,6 +74,7 @@ Vagrant.configure("2") do |config|
 
   ## This is a hack
   config.vm.provision :shell, :inline => <<-CLEANUP
+        yum erase -y libyaml
         yum install -y cmake
   CLEANUP
 

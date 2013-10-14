@@ -47,13 +47,12 @@ dependencies [
 env = {
   "LDFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
   "CFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
-  "LD_RUN_PATH" => "#{install_dir}/embedded/lib"
-  #"LD_LIBRARY_PATH" => "#{install_dir}/embedded/lib"
+  "LD_RUN_PATH" => "#{install_dir}/embedded/lib",
+  "PATH" => "#{install_dir}/embedded/bin:#{ENV['PATH']}",
 }
 
 build do
     command [   
-                "export PATH=#{install_dir}/embedded/bin:$PATH;",
                 "./configure",
                 "--prefix=#{install_dir}/embedded",
                 "--with-python=#{install_dir}/embedded/bin/python",
